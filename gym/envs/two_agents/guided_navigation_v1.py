@@ -332,23 +332,22 @@ class GuidedNavigation(Env):
     #     return "GuideDog-v1"
 
 
-GUIDE_DOG = GuidedNavigation()
-# GUIDE_DOG.get_moving_objects(0, 1)
-GUIDE_DOG.reset()
-GUIDE_DOG.render()
-reward = 0
-steps = 0
-print('initial state: ', GUIDE_DOG.state)
-while True:
-    action1 = int(input("Agent 1 action"))
-    action2 = int(input("Agent 2 action"))
-    obs, rew, done, info = GUIDE_DOG.step((action1, action2))
-    GUIDE_DOG.render()
-    print('after step: ', str(GUIDE_DOG.state), obs)
-    steps += 1
-    reward += rew
-    print('Reward: ', reward)
-    if done:
-        print('Goal Reached, total reward is ' + str(reward))
-        print('steps: ', steps)
-        break
+# GUIDE_DOG = GuidedNavigation()
+# GUIDE_DOG.reset()
+# GUIDE_DOG.render()
+# reward = 0
+# steps = 0
+# print('initial state: ', GUIDE_DOG.state)
+# while True:
+#     action1 = int(input("Agent 1 action"))
+#     action2 = int(input("Agent 2 action"))
+#     obs, rew, done, info = GUIDE_DOG.step((action1, action2))
+#     GUIDE_DOG.render()
+#     print('after step: ', str(GUIDE_DOG.state), obs)
+#     steps += 1
+#     reward += rew
+#     print('Reward: ', reward)
+#     if done:
+#         print('Goal Reached, total reward is ' + str(reward))
+#         print('steps: ', steps)
+#         break
