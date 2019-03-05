@@ -1,5 +1,5 @@
-# 2-agent guide dog environment.
-# ==============================
+# 2-agent Guided-Navigation environment with moving obstacles.
+# ============================================================
 
 import random
 import sys

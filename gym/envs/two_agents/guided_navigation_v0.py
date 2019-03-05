@@ -1,5 +1,5 @@
 # 2-agent Guided-Navigation environment without moving obstacles.
-# =======================================================
+# ===============================================================
 
 import random
 import sys
