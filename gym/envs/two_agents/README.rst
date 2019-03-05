@@ -18,8 +18,8 @@ GuidedNavigation is an 8x10 grid which has two agents in which one agent guides 
 
 .. image:: https://github.com/VSNanditha/gym/blob/master/gym/envs/two_agents/images/GuidedNavigation-v0.jpg
    :height: 50px
-   :width: 100 px
-   :scale: 50 %
+   :width: 50 px
+   :scale: 10 %
    :alt:  GuidedNavigation-v0
    :align: right
 
