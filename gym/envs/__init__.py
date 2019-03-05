@@ -591,3 +591,31 @@ register(
     entry_point='gym.envs.unittest:MemorizeDigits',
     reward_threshold=20,
     )
+
+
+# Two Agents
+# ----------
+
+register(
+    id='GuideDog-v0',
+    entry_point='gym.envs.two_agents:GuideDog_v0',
+    max_episode_steps=200,
+    )
+
+register(
+    id='GuideDog-v1',
+    entry_point='gym.envs.two_agents:GuideDog_v1',
+    max_episode_steps=200,
+    )
+
+register(
+    id='BlockDudes-v0',
+    entry_point='gym.envs.two_agents:BlockDudes',
+    max_episode_steps=200,
+    )
+
+register(
+    id='ObjectTransport-v0',
+    entry_point='gym.envs.two_agents:ObjectTransport',
+    max_episode_steps=200,
+    )
