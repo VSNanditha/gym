@@ -1,3 +1,5 @@
+**Status:** Implementation of only text rendering yet, working on image rendering
+
 Environments with two-agents
 ****************************
 
