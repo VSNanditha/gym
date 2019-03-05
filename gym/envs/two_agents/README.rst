@@ -19,7 +19,11 @@ GuidedNavigation is an 8x10 grid which has two agents in which one agent guides 
 .. image:: gym/gym/envs/two_agents/images/GuidedNavigation-v0.jpg
 
 Actions for each agent:
+<<<<<<< HEAD
 -----------------------
+=======
+----------------------- 
+>>>>>>> README update
 ``['LEFT', 'RIGHT', 'UP', 'DOWN']``
 
 Action Space:
