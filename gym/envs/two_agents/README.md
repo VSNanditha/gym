@@ -17,6 +17,10 @@ Action Space: <br />
 ######Agent 1<br />
 ```Agent 1 can observe the surroundings around both the agents marked by the positions 0 - 9 in the figure below and detenct any obstacles in these positions```<br/>
 
++---------+---------+-----------+
+| 1       |  2      |  3        |
++---------+---------+-----------+
+
 |     :---:     |     :---:     |     :---:     |     :---:     |
 |       2       |       3       |       4       |       5       |
 |       1       |     Agent1    |     Agent2    |       6       |
