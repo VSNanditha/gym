@@ -1,9 +1,14 @@
 # Environments with two-agents
 
-To call the environment, use - `gym.make("GuidedNavigation-v0/GuidedNavigation-v1")`
+USAGE:
 
-<<<<<<< HEAD
-=======
+.. code:: python
+
+    import gym
+    env = gym.make('GuidedNavigation-v0/GuidedNavigation-v1')
+    env.reset()
+    env.render()
+
 ## Environment 1: GuidedNavigation-v0
 
 The environment is an 8x10 grid which has two agents in which one agent guides the other agent in the environment to reach the home base.
