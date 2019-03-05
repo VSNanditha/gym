@@ -10,7 +10,7 @@ from gym.spaces import Discrete, Tuple, Box
 from six import StringIO
 
 
-class GuideDog_v1(Env):
+class GuidedNavigation(Env):
     def __init__(self):
         """Initialization method for the environment Guide-Dog
 

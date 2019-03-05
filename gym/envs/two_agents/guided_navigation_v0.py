@@ -1,4 +1,4 @@
-# 2-agent guide dog environment without mocing obstacles.
+# 2-agent Guided-Navigation environment without moving obstacles.
 # =======================================================
 
 import random
@@ -10,9 +10,9 @@ from gym.spaces import Discrete, Tuple, Box
 from six import StringIO
 
 
-class GuideDog_v0(Env):
+class GuidedNavigation(Env):
     def __init__(self):
-        """Initialization method for the environment Guide-Dog
+        """Initialization method for the environment Guided-Navigation
 
         """
         self.noise = 0.1  # (executed actions) != (intended actions) with this probability
@@ -71,7 +71,7 @@ class GuideDog_v0(Env):
         """
 
         self.state = (7, 0)
-        obstacles = self.detect_obstacles((7, 0))
+        obstacles = self._detect_obstacles((7, 0))
         return self._get_obs(obstacles, (7, 0))
 
     def _get_obs(self, obstacles, position):
@@ -109,7 +109,7 @@ class GuideDog_v0(Env):
             state += '\n'
         output_stream.write(state)
 
-    def move_agent_horizontal(self, agent_position, obstacles, action):
+    def _move_agent_horizontal(self, agent_position, obstacles, action):
         """function for the horizontal movement of the agents
 
         :param agent_position: position of the agents
@@ -126,7 +126,7 @@ class GuideDog_v0(Env):
         agent_position[0] = nx
         return agent_position
 
-    def move_agent_vertical(self, agent_position, obstacles, action):
+    def _move_agent_vertical(self, agent_position, obstacles, action):
         """function for the vertical movement of the agents
 
         :param agent_position: position of the agents
@@ -144,7 +144,7 @@ class GuideDog_v0(Env):
         agent_position[1] = ny
         return agent_position
 
-    def detect_obstacles(self, agent_position):
+    def _detect_obstacles(self, agent_position):
         """function to detect obstacles after the action of the agents is performed
 
         :param agent_position: position of the agents
@@ -199,15 +199,15 @@ class GuideDog_v0(Env):
 
         agent_position = list(self.state)
 
-        obstacles = self.detect_obstacles(agent_position)
+        obstacles = self._detect_obstacles(agent_position)
         if action1 in (1, 0):
-            agent_position = self.move_agent_horizontal(agent_position, obstacles, action1)
+            agent_position = self._move_agent_horizontal(agent_position, obstacles, action1)
         elif action1 in (2, 3):
-            agent_position = self.move_agent_vertical(agent_position, obstacles, action1)
+            agent_position = self._move_agent_vertical(agent_position, obstacles, action1)
         else:
             pass
 
-        obstacles = self.detect_obstacles(agent_position)
+        obstacles = self._detect_obstacles(agent_position)
         self.state = tuple(agent_position)
 
         done, reward = False, 0
@@ -220,23 +220,23 @@ class GuideDog_v0(Env):
 
         return self._get_obs(tuple(obstacles), tuple(agent_position)), reward, done, {}
 
-    def action_values(self, actions):
-        """
+    # def _action_values(self, actions):
+    #     """
+    #
+    #     :param actions: list of actions
+    #     :return: list of action numbers
+    #     """
+    #     return list(actions.index(x) for x in actions)
+    #
+    # def _env_name(self):
+    #     """
+    #
+    #     :return: domain name
+    #     """
+    #     return "GuideDog-v0"
 
-        :param actions: list of actions
-        :return: list of action numbers
-        """
-        return list(actions.index(x) for x in actions)
 
-    def env_name(self):
-        """
-
-        :return: domain name
-        """
-        return "GuideDog-v0"
-
-
-GUIDE_DOG = GuideDog_v0()
+GUIDE_DOG = GuidedNavigation()
 GUIDE_DOG.render()
 reward = 0
 steps = 0
