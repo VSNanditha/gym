@@ -44,8 +44,8 @@ class GuidedNavigation(Env):
         self.action_space = Tuple(
             [Discrete(len(self.actions_agent1)), Discrete(len(self.actions_agent2))]
         )
-        self.horizontal_objects = 0
-        self.vertical_objects = 0
+        # self.horizontal_objects = 0
+        self.vertical_objects = 1
         self.reset()
         self.low_agent1 = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
         self.high_agent1 = np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3])
@@ -58,22 +58,18 @@ class GuidedNavigation(Env):
         self.observation_space = Tuple([self.observation_space_agent1,
                                         self.observation_space_agent2])
 
-    def _get_moving_objects(self, horizontal_objects=0, vertical_objects=0):
-        """function to set the number of moving objects in the domain
-
-        :param horizontal_objects:
-        :param vertical_objects:
-        """
-        self.horizontal_objects = horizontal_objects
-        self.vertical_objects = vertical_objects
+    # def _get_moving_objects(self, horizontal_objects=0, vertical_objects=0):
+    #     """function to set the number of moving objects in the domain
+    #
+    #     :param horizontal_objects:
+    #     :param vertical_objects:
+    #     """
+    #     self.horizontal_objects = horizontal_objects
+    #     self.vertical_objects = vertical_objects
 
     def reset(self):
         """method to reset the environment to the initial state
 
-        :param horizontal_objects: number of moving objects for the environment
-                                    in horizontal direction
-        :param vertical_objects: number of moving objects for the environment
-                                    in vertical direction
         :return: observations of the environment
         """
 
@@ -86,18 +82,22 @@ class GuidedNavigation(Env):
             0 - no obstacle
             1 - obstacle
         """
-        assert self.horizontal_objects in range(0, 3), "Error in the number of horizontal moving " \
-                                                       "objects, allowed max 2 min 0"
+        # assert self.horizontal_objects in range(0, 3), "Error in the number of horizontal moving " \
+        #                                                "objects, allowed max 2 min 0"
         assert self.vertical_objects in range(0, 4), "Error in the number of vertical moving " \
                                                      "objects, allowed max 3 min 0"
 
-        starting_position = [(0, 4), (0, 5), (0, 6), (7, 4), (7, 5), (7, 6)]
-        for obj in range(self.horizontal_objects):
-            random_position = random.sample(starting_position, 1)
-            key = str(obj) + '_h'
-            self.moving_objects[key] = ['h', random_position[0]]
-            starting_position.remove(random_position[0])
+        # starting_position = [(0, 4), (0, 5), (0, 6), (7, 4), (7, 5), (7, 6)]
+        # TODO: 1. Configure vertical moving objects
+        # TODO: 2. Check the learning performance with different baseline algorithms
+        # for obj in range(self.horizontal_objects):
+        #     random_position = random.sample(starting_position, 1)
+        #     key = str(obj) + '_h'
+        #     self.moving_objects[key] = ['h', random_position[0]]
+        #     starting_position.remove(random_position[0])
 
+        # starting_position = [(3, 9), (2, 9), (3, 0), (2, 0)]
+        # TODO - make the starting position dynamic and configure the domain for multiple vertical moving objects
         starting_position = (3, 9)
         for obj in range(self.vertical_objects):
             key = str(obj) + '_v'
@@ -332,23 +332,23 @@ class GuidedNavigation(Env):
     #     return "GuideDog-v1"
 
 
-# GUIDE_DOG = GuideDog_v1()
+GUIDE_DOG = GuidedNavigation()
 # GUIDE_DOG.get_moving_objects(0, 1)
-# GUIDE_DOG.reset()
-# GUIDE_DOG.render()
-# reward = 0
-# steps = 0
-# print('initial state: ', GUIDE_DOG.state)
-# while True:
-#     action1 = int(input("Agent 1 action"))
-#     action2 = int(input("Agent 2 action"))
-#     obs, rew, done, info = GUIDE_DOG.step((action1, action2))
-#     GUIDE_DOG.render()
-#     print('after step: ', str(GUIDE_DOG.state), obs)
-#     steps += 1
-#     reward += rew
-#     print('Reward: ', reward)
-#     if done:
-#         print('Goal Reached, total reward is ' + str(reward))
-#         print('steps: ', steps)
-#         break
+GUIDE_DOG.reset()
+GUIDE_DOG.render()
+reward = 0
+steps = 0
+print('initial state: ', GUIDE_DOG.state)
+while True:
+    action1 = int(input("Agent 1 action"))
+    action2 = int(input("Agent 2 action"))
+    obs, rew, done, info = GUIDE_DOG.step((action1, action2))
+    GUIDE_DOG.render()
+    print('after step: ', str(GUIDE_DOG.state), obs)
+    steps += 1
+    reward += rew
+    print('Reward: ', reward)
+    if done:
+        print('Goal Reached, total reward is ' + str(reward))
+        print('steps: ', steps)
+        break
