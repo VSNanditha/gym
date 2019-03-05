@@ -597,13 +597,13 @@ register(
 # ----------
 
 register(
-    id='GuideDog-v0',
+    id='GuidedNavigation-v0',
     entry_point='gym.envs.two_agents:GuidedNavigation',
     max_episode_steps=200,
     )
 
 register(
-    id='GuideDog-v1',
+    id='GuidedNavigation-v1',
     entry_point='gym.envs.two_agents.guided_navigation_v1:GuidedNavigation',
     max_episode_steps=200,
     )

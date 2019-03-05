@@ -58,7 +58,7 @@ class GuidedNavigation(Env):
         self.observation_space = Tuple([self.observation_space_agent1,
                                         self.observation_space_agent2])
 
-    def get_moving_objects(self, horizontal_objects=0, vertical_objects=0):
+    def _get_moving_objects(self, horizontal_objects=0, vertical_objects=0):
         """function to set the number of moving objects in the domain
 
         :param horizontal_objects:
@@ -104,7 +104,7 @@ class GuidedNavigation(Env):
             self.moving_objects[key] = ['v', starting_position]
 
         self.state = (list(self.moving_objects.values()), (7, 0, 0))
-        obstacles = self.detect_obstacles((7, 0, 0))
+        obstacles = self._detect_obstacles((7, 0, 0))
         return self._get_obs(obstacles, (7, 0, 0))
 
     def _get_obs(self, obstacles, position):
@@ -145,7 +145,7 @@ class GuidedNavigation(Env):
             state += '\n'
         output_stream.write(state)
 
-    def move_object(self, moving_object_key, moving_object_value, agent_position):
+    def _move_object(self, moving_object_key, moving_object_value, agent_position):
         """function to change the position of the moving objects
 
         :param moving_object_key: key value of the moving object
@@ -172,7 +172,7 @@ class GuidedNavigation(Env):
         else:
             self.moving_objects[moving_object_key][1] = destination_position
 
-    def move_agent_horizontal(self, agent_position, obstacles, action):
+    def _move_agent_horizontal(self, agent_position, obstacles, action):
         """function for the horizontal movement of the agents
 
         :param agent_position: position of the agents
@@ -187,12 +187,12 @@ class GuidedNavigation(Env):
         if (nx < 0) or (nx >= self.max_x) or self.static_map[a_y][nx] != ' ' or (a_x - 1 + dx) < 0 or \
                 (a_x - 1 + dx) >= self.max_x or self.static_map[a_y][a_x - 1 + dx] != ' ' or (
                 dx == -1 and obstacles[1] == 1) or (dx == 1 and obstacles[6] == 1) \
-                or (nx, a_y) in moving_objects or self.avoid_collision(dog_position, (nx, a_y)):
+                or (nx, a_y) in moving_objects or self._avoid_collision(dog_position, (nx, a_y)):
             return agent_position
         agent_position[0] = nx
         return agent_position
 
-    def move_agent_vertical(self, agent_position, obstacles, action):
+    def _move_agent_vertical(self, agent_position, obstacles, action):
         """function for the vertical movement of the agents
 
         :param agent_position: position of the agents
@@ -208,12 +208,12 @@ class GuidedNavigation(Env):
                 self.static_map[ny][a_x] != ' ' or (
                 dy == -1 and (obstacles[8] == 1 or obstacles[9] == 1)) or \
                 (dy == 1 and (obstacles[3] == 1 or obstacles[4] == 1)) or \
-                (a_x, ny) in moving_objects or self.avoid_collision(dog_position, (a_x, ny)):
+                (a_x, ny) in moving_objects or self._avoid_collision(dog_position, (a_x, ny)):
             return agent_position
         agent_position[1] = ny
         return agent_position
 
-    def detect_obstacles(self, agent_position):
+    def _detect_obstacles(self, agent_position):
         """function to detect obstacles after the action of the agents is performed
 
         :param agent_position: position of the agents
@@ -245,7 +245,7 @@ class GuidedNavigation(Env):
         # print('obstacles: ' + str(obstacles))
         return obstacles
 
-    def avoid_collision(self, dog_position, man_position):
+    def _avoid_collision(self, dog_position, man_position):
         """function to avoid collision of the agents with moving objects
 
         :param dog_position: destination position of the agent - dog
@@ -286,19 +286,19 @@ class GuidedNavigation(Env):
 
         agent_position = list(self.state[1])
 
-        obstacles = self.detect_obstacles(agent_position)
+        obstacles = self._detect_obstacles(agent_position)
         if action1 in (1, 0):
-            agent_position = self.move_agent_horizontal(agent_position, obstacles, action1)
+            agent_position = self._move_agent_horizontal(agent_position, obstacles, action1)
         elif action1 in (2, 3):
-            agent_position = self.move_agent_vertical(agent_position, obstacles, action1)
+            agent_position = self._move_agent_vertical(agent_position, obstacles, action1)
         else:
             pass
 
         # moving objects action call
         for key, value in self.moving_objects.items():
-            self.move_object(key, value, agent_position)
+            self._move_object(key, value, agent_position)
 
-        obstacles = self.detect_obstacles(agent_position)
+        obstacles = self._detect_obstacles(agent_position)
         if action1 in (4, 5, 6):
             obstacles[10], agent_position[2] = action1, action1
         else:
@@ -316,39 +316,39 @@ class GuidedNavigation(Env):
         # print('returning from step: ', self.state, self._get_obs(tuple(obstacles), tuple(agent_position)), reward, done)
         return self._get_obs(tuple(obstacles), tuple(agent_position)), reward, done, {}
 
-    def action_values(self, actions):
-        """
+    # def action_values(self, actions):
+    #     """
+    #
+    #     :param actions: list of actions
+    #     :return: list of action numbers
+    #     """
+    #     return list(actions.index(x) for x in actions)
+    #
+    # def env_name(self):
+    #     """
+    #
+    #     :return: domain name
+    #     """
+    #     return "GuideDog-v1"
 
-        :param actions: list of actions
-        :return: list of action numbers
-        """
-        return list(actions.index(x) for x in actions)
 
-    def env_name(self):
-        """
-
-        :return: domain name
-        """
-        return "GuideDog-v1"
-
-
-GUIDE_DOG = GuideDog_v1()
-GUIDE_DOG.get_moving_objects(0, 1)
-GUIDE_DOG.reset()
-GUIDE_DOG.render()
-reward = 0
-steps = 0
-print('initial state: ', GUIDE_DOG.state)
-while True:
-    action1 = int(input("Agent 1 action"))
-    action2 = int(input("Agent 2 action"))
-    obs, rew, done, info = GUIDE_DOG.step((action1, action2))
-    GUIDE_DOG.render()
-    print('after step: ', str(GUIDE_DOG.state), obs)
-    steps += 1
-    reward += rew
-    print('Reward: ', reward)
-    if done:
-        print('Goal Reached, total reward is ' + str(reward))
-        print('steps: ', steps)
-        break
+# GUIDE_DOG = GuideDog_v1()
+# GUIDE_DOG.get_moving_objects(0, 1)
+# GUIDE_DOG.reset()
+# GUIDE_DOG.render()
+# reward = 0
+# steps = 0
+# print('initial state: ', GUIDE_DOG.state)
+# while True:
+#     action1 = int(input("Agent 1 action"))
+#     action2 = int(input("Agent 2 action"))
+#     obs, rew, done, info = GUIDE_DOG.step((action1, action2))
+#     GUIDE_DOG.render()
+#     print('after step: ', str(GUIDE_DOG.state), obs)
+#     steps += 1
+#     reward += rew
+#     print('Reward: ', reward)
+#     if done:
+#         print('Goal Reached, total reward is ' + str(reward))
+#         print('steps: ', steps)
+#         break
