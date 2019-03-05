@@ -16,7 +16,7 @@ Environment 1: GuidedNavigation-v0
 
 GuidedNavigation is an 8x10 grid which has two agents in which one agent guides the other agent in the environment to reach the home base. This version of the domain has only static obstacles.
 
-.. image:: https://github.com/VSNanditha/gym/blob/master/gym/envs/two_agents/images/GuidedNavigation-v0.jpg
+.. image:: https://github.com/VSNanditha/gym/blob/master/gym/envs/two_agents/images/GuidedNavigation-v0.png
    :height: 50px
    :width: 50 px
    :scale: 10 %
@@ -76,7 +76,7 @@ Environment 2: GuidedNavigation-v1
 
 GuidedNavigation is an 8x10 grid which has two agents in which one agent guides the other agent in the environment to reach the home base. This version of the domain has static obstacles and also a dynamic obstacle which moves in a fixed path vertically.
 
-.. image:: https://github.com/VSNanditha/gym/blob/master/gym/envs/two_agents/images/GuidedNavigation-v1.jpg
+.. image:: https://github.com/VSNanditha/gym/blob/master/gym/envs/two_agents/images/GuidedNavigation-v1.png
    :height: 100px
    :width: 200 px
    :scale: 50 %
