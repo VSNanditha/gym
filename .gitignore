@@ -39,5 +39,6 @@ tutorial/*.html
 vizdoom.ini
 
 # private two-agent domains
-./gym/envs/two_agents/block_dudes.py
-./gym/envs/two_agents/object_transport.py
+block_dudes.py
+object_transport.py
+.gitignore
